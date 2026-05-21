@@ -58,6 +58,8 @@ body {
     letter-spacing: 0.02em;
     min-height: 100vh;
     position: relative;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 /* Hide scrollbar */
@@ -91,6 +93,8 @@ html {
     background-size: 1600px 800px;
     opacity: 0.4;
     animation: slow-pan 120s linear infinite;
+    will-change: background-position;
+    transform: translateZ(0);
 }
 @keyframes slow-pan { from { background-position: 0 0; } to { background-position: 1600px 800px; } }
 
@@ -213,8 +217,8 @@ body::after  { content: ''; position: absolute; bottom: 5%; right: -10%; width: 
     font-family: var(--font-body); font-size: 0.65rem; font-weight: 500;
     letter-spacing: 0.2em; color: var(--text-muted);
 }
-.scroll-hint svg { animation: scroll-bounce 2s ease-in-out infinite; }
-@keyframes scroll-bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+.scroll-hint svg { animation: scroll-bounce 2s ease-in-out infinite; will-change: transform; transform: translateZ(0); }
+@keyframes scroll-bounce { 0%,100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, 6px, 0); } }
 
 .hero-bg-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: hidden; }
 .hero-bg-img { position: absolute; top: 0; right: 0; width: 60%; height: 100%; object-fit: cover; object-position: center right; }
@@ -247,12 +251,12 @@ body::after  { content: ''; position: absolute; bottom: 5%; right: -10%; width: 
 .gallery-header .section-tag { margin-bottom: 0; }
 .gallery-header .section-title { margin-bottom: 0; }
 
-.gallery-carousel { overflow: hidden; position: relative; }
+.gallery-carousel { overflow: hidden; position: relative; overflow-x: clip; width: 100%; }
 .gallery-carousel::before, .gallery-carousel::after { content: ''; position: absolute; top: 0; width: 120px; height: 100%; z-index: 2; pointer-events: none; }
 .gallery-carousel::before { left: 0; background: linear-gradient(to right, rgba(3,8,19,1) 0%, transparent 100%); }
 .gallery-carousel::after  { right: 0; background: linear-gradient(to left, rgba(3,8,19,1) 0%, transparent 100%); }
 
-.gallery-track { display: flex; gap: 1.2rem; width: max-content; animation: scroll-left 45s linear infinite; }
+.gallery-track { display: flex; gap: 1.2rem; width: max-content; animation: scroll-left 45s linear infinite; will-change: transform; transform: translateZ(0); backface-visibility: hidden; }
 .gallery-track.scroll-right { animation: scroll-right 45s linear infinite; }
 
 .gallery-card { position: relative; border-radius: 10px; overflow: hidden; flex: 0 0 380px; min-width: 380px; height: 220px; border: 1px solid rgba(212,175,55,.15); background: var(--bg-secondary); transition: var(--transition-smooth); cursor: pointer; display: block; }
@@ -261,8 +265,8 @@ body::after  { content: ''; position: absolute; bottom: 5%; right: -10%; width: 
 .gallery-card:hover { transform: translateY(-8px); border-color: var(--accent-gold); box-shadow: var(--glow-shadow-strong); }
 .gallery-card:hover .gallery-img-wrap img { transform: scale(1.08); }
 
-@keyframes scroll-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@keyframes scroll-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@keyframes scroll-left { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+@keyframes scroll-right { from { transform: translate3d(-50%, 0, 0); } to { transform: translate3d(0, 0, 0); } }
 
 /* ── Lightbox ── */
 .lightbox-overlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); align-items: center; justify-content: center; animation: lb-fade-in 0.25s ease-out; }
@@ -360,7 +364,7 @@ body::after  { content: ''; position: absolute; bottom: 5%; right: -10%; width: 
 
     /* Full-bleed illustration behind everything */
     .hero-bg-img {
-        width: 100%; height: 65%;
+        width: 100%; height: 85%;
         top: 0; right: 0;
         object-position: center top;
     }
@@ -411,6 +415,10 @@ body::after  { content: ''; position: absolute; bottom: 5%; right: -10%; width: 
     .gallery-section-container { width: 92%; }
     .gallery-carousel::before, .gallery-carousel::after { width: 40px; }
     .gallery-card { flex: 0 0 280px; min-width: 280px; height: 170px; }
+    
+    /* Reduce animation performance impact on mobile */
+    .gallery-track { animation-duration: 50s; }
+    .stars-overlay { animation: none; opacity: 0.2; }
 
     /* ── Mobile Expectations ── */
     .expectations-section { padding: 5rem 0 4rem; }
