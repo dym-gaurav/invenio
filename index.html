@@ -338,9 +338,9 @@ body::after  { content: ''; position: absolute; bottom: 5%; right: -10%; width: 
 
     /* Hamburger */
     .hamburger {
-        display: flex; flex-direction: column; justify-content: center; gap: 5px;
+        display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px;
         width: 44px; height: 44px; cursor: pointer; border: none;
-        background: transparent; padding: 6px; border-radius: 8px;
+        background: transparent; padding: 0; border-radius: 8px;
         border: 1px solid rgba(212,175,55,.2);
     }
     .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--accent-gold); border-radius: 2px; transition: var(--transition-smooth); }
@@ -404,7 +404,8 @@ body::after  { content: ''; position: absolute; bottom: 5%; right: -10%; width: 
     .scroll-hint { display: flex; }
 
     /* ── Mobile About ── */
-    .about { padding: 5rem 0 3rem; min-height: auto; }
+    /* Increase height by ~30% on mobile so content is more prominent */
+    .about { padding: 5.5rem 0 3.3rem; min-height: 130vh; }
     .about-container { grid-template-columns: 1fr; width: 92%; max-width: 100%; }
     .about-spacer { display: none; }
     .about-bg-img { width: 100%; opacity: 0.5; object-position: center; }
